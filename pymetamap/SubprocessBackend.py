@@ -40,6 +40,7 @@ class SubprocessBackend(MetaMap):
                          allow_concept_gaps=False,
                          term_processing=False,
                          no_derivational_variants=False,
+                         no_tagging=False,
                          derivational_variants=False,
                          ignore_word_order=False,
                          unique_acronym_variants=False,
@@ -48,6 +49,7 @@ class SubprocessBackend(MetaMap):
                          compute_all_mappings=False,
                          prune=False,
                          mm_data_version=False,
+                         mm_data_year=None,
                          exclude_sources=[],
                          restrict_to_sources=[],
                          restrict_to_sts=[],
@@ -112,6 +114,9 @@ class SubprocessBackend(MetaMap):
                     raise ValueError("mm_data_version must be Base, USAbase, or NLM.")
                 command.append('-V')
                 command.append(str(mm_data_version))
+            if mm_data_year is not None:
+                command.append('-Z')
+                command.append(str(mm_data_year))
             if word_sense_disambiguation:
                 command.append('-y')
             if strict_model:
@@ -131,6 +136,8 @@ class SubprocessBackend(MetaMap):
                 command.append('-z')
             if no_derivational_variants:
                 command.append('-d')
+            if no_tagging:
+                command.append('-t')
             if derivational_variants:
                 command.append('-D')
             if ignore_word_order:
